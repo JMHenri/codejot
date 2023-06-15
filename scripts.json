@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "deno run --allow-net server.ts",
+    "test": "deno test --allow-net server_test.ts",
+    "test-populate": "deno run --allow-all src/db/testPopulate.ts",
+    "test-clean": "deno run --allow-all src/db/testClean.ts"
+  }
+}
