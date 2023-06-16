@@ -14,10 +14,10 @@ function c() {
   let methodToCall = object[propertyToAccess];
 
   // If 'methodToCall' is not a function, this will throw a TypeError.
-  return methodToCall();
+  return;
 }
 
-function d(): { [key: string]: any } {
+function d() {
   let x = 1;
   x += 4;
   let y = x+1;
@@ -30,4 +30,11 @@ function d(): { [key: string]: any } {
   return obj;
 }
 
-a();
+function e() {
+  console.log('blah')
+}
+
+function f() {
+  e();
+  return;
+}

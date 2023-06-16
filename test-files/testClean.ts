@@ -1,10 +1,12 @@
-const neo4j = require('neo4j-driver');
+import { neo4j } from "../deps.ts";
+
 
 
 const driver = neo4j.driver(
-  'neo4j+s://56a9a842.databases.neo4j.io',
-  neo4j.auth.basic(NEO4JUSER, NEO4JPASS)
+    Deno.env.get('NEO4J_URL') as string,
+    neo4j.auth.basic(Deno.env.get('NEO4J_USER') as string, Deno.env.get('NEO4J_PASS') as string)
 );
+
 const session = driver.session();
 
 async function clearGraph() {
