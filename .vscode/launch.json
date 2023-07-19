@@ -8,7 +8,7 @@
       "request": "launch",
       "name": "Launch Program",
       "type": "node",
-      "program": "${workspaceFolder}/test-files/testPopulate.ts",
+      "program": "${workspaceFolder}/test/testLLM.ts",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "/opt/homebrew/bin/deno",
       "runtimeArgs": [
@@ -16,7 +16,8 @@
         "--unstable",
         "--inspect-wait",
         "--allow-all",
-        "--inspect-brk"
+        "--inspect-brk",
+        "--unsafely-ignore-certificate-errors"
       ],
       "attachSimplePort": 9229
     }

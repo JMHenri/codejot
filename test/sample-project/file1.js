@@ -1,5 +1,5 @@
-function a() {
-  c();
+function a(prop) {
+  c(prop);
   return;
 }
 
@@ -8,10 +8,10 @@ function b() {
   return;
 }
 
-function c() {
+function c(prop) {
   let object = d();
-  let propertyToAccess = 'wrongProperty'
-  let methodToCall = object[propertyToAccess];
+  let propertyToAccess = prop;
+  let methodToCall = object[propertyToAccess].blah;
 
   // If 'methodToCall' is not a function, this will throw a TypeError.
   return;
@@ -38,3 +38,5 @@ function f() {
   e();
   return;
 }
+
+module.exports = {  a  };

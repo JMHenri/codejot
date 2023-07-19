@@ -19,3 +19,7 @@ export * as esprima from 'npm:esprima';
 
 // Estraverse for AST traversal
 export * as estraverse from 'npm:estraverse';
+
+export * as openAI from 'npm:openai';
+
+export * as log from "https://deno.land/std@0.113.0/log/mod.ts";

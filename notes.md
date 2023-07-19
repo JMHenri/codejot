@@ -3,21 +3,17 @@ To resolve npm packages.
 deno cache deps.ts
 
 
-I think resolution of vars and functions is effectively impossible (although an llm could help)
-there is the issue in that, what about top level code?
+to ensure consistent calling:
+double call and compare results
+if results differ, double call again.
 
-Going on a file by file basis, we can resolve references to other files.
-The only issue in this case is context size.
+a great node library would be "llm-multi-sample-math" and "openai-multisample" or something.
+the math lib would take in your prompt and your desired consistency for the output.
+it would run the prompt 200 times and count up failures.
 
-If I run code thru a whitespace minifier. I think file by file should work for a few files.
-
-or hash the function defs and store as unique funs.
-decent idea
-
-Or a file that is the entry point.
-Then we can resolve all the imports and exports from that file.
-Then we can resolve all the imports and exports from those files.
-And then use llms to pull data.
+it would calculate the cheapest way to ensure the desired consistency.
+in order to increase consistency, it will run parallel prompts and compare results, only returning results if all match.
+consistency could be 100 for 'fails in in 100 times', or 100,000 for 'fails in 100,000 times'.
 
 ------
 reach out to files,
@@ -53,9 +49,6 @@ supposed its just another referenced import - that will work too, it will ask fo
 
 
 
-
-
-
 ---------
 another way to grab refs is to pre-parse with an llm and store in a graphdb.
 we store:
@@ -64,3 +57,37 @@ we store:
 but there are a lot of "turing complete" challenges to tackle here. I dont think it would work. (what if there is a class and its exported with a different name? confusing).
 ------------
 
+I could give all my files nicknames so that the llm doesn't get confused.
+
+I probably have to do resolution first and store all files with "fileresolved" paths.
+-----------
+needs to remember where each resolution goes to.
+needs to know whats been resolved.
+
+-----------------
+we will add in multiple file types over time.
+
+- project file - identified by path from ProjDir
+- documentation file - ??
+- web search results
+- and so on and so on.
+
+
+----------------------
+will also need to add in vector search.
+
+
+
+----------------
+Basic vision:
+- api endpoints
+  - take a github repo name, scan, and upload to db
+  - take a jira ticket, return comments.
+
+
+----
+basic vision for file retrieval and function retrieval:
+- master prompt asks for a file import
+- id love if they were just.... connected, somehow.
+- but to connect em I can do it live or preload, I just have to do it right.
+- To do it right. I have to crawl.

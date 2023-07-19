@@ -1,8 +1,10 @@
 {
   "scripts": {
     "start": "deno run --allow-all mod.ts",
-    "test-populate-parser": "deno run --allow-all --unsafely-ignore-certificate-errors ./test-files/testPopulateWithParser.ts",
-    "test-clean": "deno run --allow-all --unsafely-ignore-certificate-errors ./test-files/testClean.ts"
+    "test-populate-parser": "deno run --allow-all --unsafely-ignore-certificate-errors ./test/test-populate-with-parser.ts",
+    "test-populate-files": "deno run --allow-all --unsafely-ignore-certificate-errors ./test/test-populate-with-files.ts",
+    "test-clean": "deno run --allow-all --unsafely-ignore-certificate-errors ./test/test-clean.ts",
+    "test-llm": "deno run --allow-all --unsafely-ignore-certificate-errors ./test/testLLM.ts"
   },
   "envFile": ".env"
 }
