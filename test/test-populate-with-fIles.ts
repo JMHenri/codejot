@@ -1,4 +1,5 @@
 import { neo4j } from "../deps.ts";
+import { normalizePath } from "../src/helpers/functional.ts";
 
 const driver = neo4j.driver(
     Deno.env.get('NEO4J_URL') as string,
@@ -19,7 +20,7 @@ async function processFile(filePath: string) {
 
 async function processDirectory(directoryPath: string) {
     for await (const dirEntry of Deno.readDir(directoryPath)) {
-        const path = `${directoryPath}/${dirEntry.name}`;
+        const path = normalizePath(`${directoryPath}/${dirEntry.name}`);
 
         if (dirEntry.isFile) {
             await processFile(path);

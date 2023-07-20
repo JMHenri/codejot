@@ -1,5 +1,4 @@
 import { RouterContext } from '../../deps.ts';
-import { gpt4 } from './gpt4.ts'; // hypothetical GPT-4 module
 
 export const createCompletion = async (context: RouterContext) => {
   // Get the body from the context.

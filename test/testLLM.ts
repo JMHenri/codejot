@@ -7,6 +7,7 @@ import * as llmHelper from '../src/llm/helper.ts'
 import { neo4j, log } from "../deps.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import { ProjectFile } from '../types/types.ts'
+import { normalizePath } from "../src/helpers/functional.ts";
 
 async function setupLogger() {
     await log.setup({
@@ -76,17 +77,16 @@ async function getRootFileFromStackTrace(jiraData: string) {
 }
 
 async function queryDBForFile(pathToFile: string) {
-  const resolvedPath = pathToFile.startsWith('./') ? pathToFile : `./${pathToFile}`;
   const result = await session.run(
       'MATCH (f:File { path: $path }) RETURN f',
-      { path: resolvedPath }
+      { path: pathToFile }
   );
   
   const singleRecord = result.records[0];
   const fileNode = singleRecord.get(0);
   
   // Close session after executing the query
-  await session.close();
+  //await session.close();
   
   // Assuming fileNode has properties filename, content and path. Adjust if needed.
   if (fileNode) {
@@ -101,12 +101,20 @@ async function queryDBForFile(pathToFile: string) {
 }
 
 async function getSolveResponse(jiraData: string, fileList: ProjectFile[]) {
+  let response;
   for(let i = 0; i < 3; i++) {
-    const response = await llmHelper.getSolveResponse(jiraData, fileList);
-    console.log('test');
+    response = await llmHelper.getSolveResponse(jiraData, fileList);
+    const parsedResponse = JSON.parse(response?.function_call?.arguments as string);
+    if(parsedResponse.needMoreFiles) {
+      const file = await queryDBForFile(normalizePath(parsedResponse.retrieve[0]));
+      console.log('requesting file: ' + file.pathFromProjDir);
+      fileList.push(file);
+    } else {
+      break;
+    }
   }
-  const response = await llmHelper.getSolveResponse(jiraData, fileList);
-  console.log(JSON.parse(response?.function_call?.arguments as string).finalResponse)
+  let finalResponse = JSON.parse(response?.function_call?.arguments as string);
+  console.log(finalResponse);
 }
 
 async function sendMasterPrompt() {

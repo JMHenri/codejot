@@ -12,14 +12,9 @@ Identify and resolve software bugs using a stack trace from a JIRA ticket along 
 Your response should use the following TypeScript interface:
 
 \`\`\`typescript
-interface FileReq {
-  rootFile: string;
-  pathToFile: string; // path from the root file
-}
-
 interface MasterResponse {
     needMoreFiles: boolean;
-    retrieve: FileReq[]; // Array of paths to files from ProjDir, e.g., ['main.ts', 'src/blah/mathHelper.js']
+    retrieve: string[]; // Array of paths to files from ProjDir, e.g., ['main.ts', 'src/blah/mathHelper.js']
     finalResponse: string;
 }
 \`\`\`

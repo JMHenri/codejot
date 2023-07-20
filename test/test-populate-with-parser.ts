@@ -1,7 +1,7 @@
 import { neo4j } from "../deps.ts";
 import { esprima } from "../deps.ts";
 import { estraverse } from "../deps.ts";
-
+import { normalizePath } from "../src/helpers/functional";
 const driver = neo4j.driver(
     Deno.env.get('NEO4J_URL') as string,
     neo4j.auth.basic(Deno.env.get('NEO4J_USER') as string, Deno.env.get('NEO4J_PASS') as string)
